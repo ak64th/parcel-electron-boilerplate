@@ -32,7 +32,7 @@
     "parcel-bundler": "1.12.4",
     "rimraf": "5.0.5",
     "serve": "11.3.2",
-    "wait-on": "5.2.1"
+    "wait-on": "7.2.0"
   },
   "dependencies": {},
   "browserslist": [
