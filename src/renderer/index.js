@@ -1,10 +1,7 @@
-import { remote } from 'electron';
-
-console.log('Electron:', process.versions.electron);
-console.log(remote.app);
+console.log('Electron:', versions.electron());
 
 const name = 'world';
 
 window.onload = function(){
-  document.getElementById('app').innerHTML = `Helle, ${name}.`;
+  document.getElementById('app').innerHTML = `Hello, ${name}.`;
 }

@@ -4,17 +4,27 @@
   "private": true,
   "description": "An electron app boilerplate powered by parcel.",
   "main": "dist/main.js",
+  "targets": {
+    "electron-main": {
+      "context": "electron-main",
+      "distDir": "dist"
+    },
+    "electron-renderer": {
+      "context": "electron-renderer",
+      "publicUrl": ".",
+      "distDir": "dist"
+    }
+  },
   "scripts": {
-    "start": "npm run build && electron .",
+    "start": "npm run build && electron dist/main.js",
     "watch": "rimraf dist && run-p 'watch:**'",
-    "watch:main": "parcel src/main.js --target node",
-    "watch:renderer": "parcel watch src/index.html --target electron",
-    "watch:serve": "serve -l 1234 dist",
-    "watch:run": "wait-on http-get://localhost:1234/ dist/main.js && cross-env NODE_ENV=development electron .",
+    "watch:main": "parcel watch --no-hmr src/main.js src/preload.js --target electron-main",
+    "watch:renderer": "parcel serve -p 1234 src/index.html --target electron-renderer",
+    "watch:run": "wait-on http-get://localhost:1234/ dist/main.js dist/preload.js && cross-env NODE_ENV=development electron dist/main.js",
     "build": "rimraf dist && run-p 'build:**'",
-    "build:main": "parcel build src/main.js --target node",
-    "build:renderer": "parcel build src/index.html --public-url './' --target electron",
-    "package": "electron-builder",
+    "build:main": "parcel build src/main.js src/preload.js --target electron-main",
+    "build:renderer": "parcel build src/index.html --target electron-renderer",
+    "package": "npm run build && electron-builder",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -26,18 +36,20 @@
   "license": "MIT",
   "devDependencies": {
     "cross-env": "7.0.3",
-    "electron": "7.2.4",
+    "electron": "22.3.25",
     "electron-builder": "22.9.1",
     "npm-run-all2": "6.1.2",
-    "parcel-bundler": "1.12.4",
+    "parcel": "^2.12.0",
+    "process": "^0.11.10",
     "rimraf": "5.0.5",
-    "serve": "11.3.2",
-    "wait-on": "5.2.1"
+    "wait-on": "7.2.0"
   },
-  "dependencies": {},
   "browserslist": [
-    "electron > 7"
+    "electron > 22"
   ],
+  "engines": {
+    "electron": "22"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ak64th/parcel-electron-boilerplate.git"

@@ -1,5 +1,7 @@
 import { app, BrowserWindow, screen } from 'electron';
 
+import path from 'node:path';
+
 const isDev = process.env.NODE_ENV === 'development';
 
 let mainWindow = null;
@@ -15,6 +17,8 @@ function createWindow() {
     height: size.height,
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: true,
+      preload: path.join(__dirname, 'preload.js'),
     },
   });
 
